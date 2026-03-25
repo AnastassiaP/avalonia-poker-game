@@ -1,0 +1,280 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Avalonia_poker_game.ViewModels"
+             xmlns:models="using:Avalonia_poker_game.Models"
+             xmlns:conv="using:Avalonia_poker_game.Views.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="780"
+             x:Class="Avalonia_poker_game.Views.GameView"
+             x:DataType="vm:GameViewModel">
+
+    <UserControl.Resources>
+        <conv:BitmapAssetValueConverter x:Key="BitmapConv"/>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Border.playerBox">
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="BorderBrush"     Value="Transparent"/>
+            <Setter Property="CornerRadius"    Value="10"/>
+            <Setter Property="Background"      Value="#22000000"/>
+            <Setter Property="Padding"         Value="8"/>
+        </Style>
+        <Style Selector="Border.playerBox.active">
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style Selector="Button.action">
+            <Setter Property="Width"        Value="110"/>
+            <Setter Property="Height"       Value="46"/>
+            <Setter Property="FontSize"     Value="15"/>
+            <Setter Property="FontWeight"   Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*,Auto" Background="#1a3d1a">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto"
+              Background="#0d2a0d" Height="44">
+
+            <Button Grid.Column="0"
+                    Content="← Menu"
+                    Command="{Binding BackToMenuCommand}"
+                    Background="Transparent" Foreground="#aaaaaa"
+                    FontSize="13" Padding="12,0"
+                    VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Column="1"
+                       Text="{Binding CurrentPhase}"
+                       Foreground="#FFD700" FontSize="16" FontWeight="Bold"
+                       VerticalAlignment="Center" Margin="8,0"/>
+
+            <TextBlock Grid.Column="3"
+                       Text="{Binding StatusMessage}"
+                       Foreground="White" FontSize="14"
+                       VerticalAlignment="Center" Margin="16,0"/>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <Ellipse Width="920" Height="460"
+                     Fill="#2d7a27"
+                     Stroke="#5c3200" StrokeThickness="14"
+                     VerticalAlignment="Center"/>
+            
+            <Grid ColumnDefinitions="*,*,*"
+                  VerticalAlignment="Top" Margin="60,18,60,0">
+
+                <!-- Viktor -->
+                <Border Grid.Column="0" Classes="playerBox"
+                        Classes.active="{Binding Ai1.IsTurn}"
+                        HorizontalAlignment="Center">
+                    <StackPanel Spacing="4" HorizontalAlignment="Center">
+                        <Border Width="72" Height="72" CornerRadius="36"
+                                Background="#334455" ClipToBounds="True"
+                                HorizontalAlignment="Center">
+                            <Image Source="{Binding Ai1.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                        <TextBlock Text="{Binding Ai1.Name}"
+                                   Foreground="White" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}"
+                                   Foreground="#90EE90" FontSize="12"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Spacing="4"
+                                    HorizontalAlignment="Center"
+                                    IsVisible="{Binding !Ai1.IsEliminated}">
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="Folded" Foreground="#FF6666"
+                                   HorizontalAlignment="Center" FontSize="12"
+                                   IsVisible="{Binding Ai1.IsFolded}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Sofia -->
+                <Border Grid.Column="1" Classes="playerBox"
+                        Classes.active="{Binding Ai2.IsTurn}"
+                        HorizontalAlignment="Center">
+                    <StackPanel Spacing="4" HorizontalAlignment="Center">
+                        <Border Width="72" Height="72" CornerRadius="36"
+                                Background="#554433" ClipToBounds="True"
+                                HorizontalAlignment="Center">
+                            <Image Source="{Binding Ai2.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                        <TextBlock Text="{Binding Ai2.Name}"
+                                   Foreground="White" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}"
+                                   Foreground="#90EE90" FontSize="12"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Spacing="4"
+                                    HorizontalAlignment="Center"
+                                    IsVisible="{Binding !Ai2.IsEliminated}">
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="Folded" Foreground="#FF6666"
+                                   HorizontalAlignment="Center" FontSize="12"
+                                   IsVisible="{Binding Ai2.IsFolded}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Marco -->
+                <Border Grid.Column="2" Classes="playerBox"
+                        Classes.active="{Binding Ai3.IsTurn}"
+                        HorizontalAlignment="Center">
+                    <StackPanel Spacing="4" HorizontalAlignment="Center">
+                        <Border Width="72" Height="72" CornerRadius="36"
+                                Background="#334433" ClipToBounds="True"
+                                HorizontalAlignment="Center">
+                            <Image Source="{Binding Ai3.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                        <TextBlock Text="{Binding Ai3.Name}"
+                                   Foreground="White" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Ai3.Chips, StringFormat='${0}'}"
+                                   Foreground="#90EE90" FontSize="12"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Spacing="4"
+                                    HorizontalAlignment="Center"
+                                    IsVisible="{Binding !Ai3.IsEliminated}">
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                            <Border Width="36" Height="52" CornerRadius="4"
+                                    Background="#1a3f8f" ClipToBounds="True">
+                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="Folded" Foreground="#FF6666"
+                                   HorizontalAlignment="Center" FontSize="12"
+                                   IsVisible="{Binding Ai3.IsFolded}"/>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+            <!-- Cards -->
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Spacing="10">
+                <TextBlock Text="{Binding PotText}"
+                           Foreground="#FFD700" FontSize="22" FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+                <ItemsControl ItemsSource="{Binding CommunityCards}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="8"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Card">
+                            <Border Width="70" Height="105" CornerRadius="6"
+                                    Background="White" BorderBrush="#cccccc" BorderThickness="1">
+                                <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- ME -->
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                        Margin="0,0,0,10" Spacing="6">
+                <ItemsControl ItemsSource="{Binding Human.Hand}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="10"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Card">
+                            <Border Width="90" Height="135" CornerRadius="8"
+                                    Background="White" BorderBrush="#aaaaaa" BorderThickness="1">
+                                <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
+                                       Stretch="Fill"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal" Spacing="16"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding Human.Name}"
+                               Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Human.Chips, StringFormat='Chips: ${0}'}"
+                               Foreground="#90EE90" FontSize="14"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Action bar -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto"
+              Background="#0a2a0a" MinHeight="68">
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal"
+                        Spacing="10" Margin="16,0"
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding IsPlayerTurn}">
+                <TextBlock Text="Raise:" Foreground="White"
+                           VerticalAlignment="Center" FontSize="14"/>
+                <Slider Value="{Binding RaiseAmount}"
+                        Minimum="{Binding MinRaise}"
+                        Maximum="{Binding MaxRaise}"
+                        Width="220"
+                        VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding RaiseAmount, StringFormat='${0}'}"
+                           Foreground="#FFD700" FontSize="14" FontWeight="Bold"
+                           VerticalAlignment="Center" MinWidth="60"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        Spacing="10" Margin="16,10"
+                        IsVisible="{Binding IsPlayerTurn}">
+                <Button Classes="action" Content="Fold"
+                        Command="{Binding FoldCommand}"
+                        Background="#8B0000" Foreground="White"/>
+                <Button Classes="action" Content="{Binding CallText}"
+                        Command="{Binding CheckCallCommand}"
+                        Background="#1a5c1a" Foreground="White"/>
+                <Button Classes="action" Content="Raise"
+                        Command="{Binding RaiseCommand}"
+                        Background="#8B6914" Foreground="White"/>
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                    Content="New Hand"
+                    Command="{Binding NewHandCommand}"
+                    IsVisible="{Binding ShowNewHandButton}"
+                    Width="160" Height="46" FontSize="15"
+                    Background="#2a5a8a" Foreground="White"
+                    Margin="16,10"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

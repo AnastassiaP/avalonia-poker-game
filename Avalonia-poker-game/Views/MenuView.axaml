@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Avalonia_poker_game.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="780"
+             x:Class="Avalonia_poker_game.Views.MenuView"
+             x:DataType="vm:MenuViewModel">
+
+    <Grid RowDefinitions="*, Auto, Auto, *">
+        <TextBlock Grid.Row="1"
+                   Text="Poker Game"
+                   HorizontalAlignment="Center"
+                   FontSize="48"
+                   FontWeight="Bold"
+                   Margin="0,0,0,48"/>
+
+        <StackPanel Grid.Row="2"
+                    Spacing="16"
+                    HorizontalAlignment="Center">
+            <Button Content="Play"
+                    Command="{Binding PlayCommand}"
+                    Width="200" Height="52" FontSize="18"/>
+            <Button Content="Settings"
+                    Command="{Binding SettingsCommand}"
+                    Width="200" Height="52" FontSize="18"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>
