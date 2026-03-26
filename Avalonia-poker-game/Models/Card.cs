@@ -1,8 +1,5 @@
 namespace Avalonia_poker_game.Models;
 
-public enum Suit { Clubs, Diamonds, Hearts, Spades }
-public enum Rank { Two = 2, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace }
-
 public class Card
 {
     public Suit Suit { get; }
@@ -27,6 +24,10 @@ public class Card
         _ => ((int)Rank).ToString()
     };
 
-    public Card(Suit suit, Rank rank) { Suit = suit; Rank = rank; }
+    public Card(Suit suit, Rank rank)
+    {
+        Suit = suit; 
+        Rank = rank;
+    }
     public override string ToString() => $"{RankCode}{SuitCode}";
 }

@@ -49,12 +49,23 @@ public partial class SettingsViewModel : ViewModelBase
             AppSettings.CardBackColor = value.Name;
     }
     
-    [ObservableProperty] private bool _soundEffects     = true;
-    [ObservableProperty] private bool _backgroundMusic  = true;
-    [ObservableProperty] private bool _showAnimations   = true;
-    [ObservableProperty] private bool _autoFold            = false;
-    [ObservableProperty] private bool _showHandHints       = false;
-    [ObservableProperty] private bool _allowChatDuringPlay = true;
+    [ObservableProperty] 
+    private bool _soundEffects  = true;
+    
+    [ObservableProperty] 
+    private bool _backgroundMusic = true;
+    
+    [ObservableProperty] 
+    private bool _showAnimations = true;
+    
+    [ObservableProperty] 
+    private bool _autoFold = false;
+    
+    [ObservableProperty] 
+    private bool _showHandHints = false;
+    
+    [ObservableProperty] 
+    private bool _allowChatDuringPlay = true;
     
     // Go back 
     [RelayCommand]

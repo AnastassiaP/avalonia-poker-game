@@ -25,12 +25,23 @@ public partial class GameViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(PotText))]
     private int _pot;
 
-    [ObservableProperty] private string _currentPhase = "Pre-Flop";
-    [ObservableProperty] private string _statusMessage = "Welcome to Poker!";
-    [ObservableProperty] private bool _showNewHandButton;
-    [ObservableProperty] private int _raiseAmount = 40;
-    [ObservableProperty] private int _maxRaise = 1000;
-    [ObservableProperty] private int _minRaise = 20;
+    [ObservableProperty] 
+    private string _currentPhase = "Pre-Flop";
+    
+    [ObservableProperty] 
+    private string _statusMessage = "Welcome to Poker!";
+    
+    [ObservableProperty] 
+    private bool _showNewHandButton;
+    
+    [ObservableProperty] 
+    private int _raiseAmount = 40;
+    
+    [ObservableProperty] 
+    private int _maxRaise = 1000;
+    
+    [ObservableProperty] 
+    private int _minRaise = 20;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(FoldCommand))]

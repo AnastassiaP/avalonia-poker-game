@@ -4,7 +4,8 @@ namespace Avalonia_poker_game.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private ViewModelBase _currentPage;
+    [ObservableProperty] 
+    private ViewModelBase _currentPage;
 
     public MainWindowViewModel()
     {
