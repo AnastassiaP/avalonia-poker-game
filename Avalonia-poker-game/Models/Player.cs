@@ -11,23 +11,24 @@ public partial class Player : ObservableObject
         IsHuman = isHuman;
         CharacterImagePath = characterImagePath;
     }
+
     public string Name { get; }
     public bool IsHuman { get; }
     public string CharacterImagePath { get; }
     public ObservableCollection<Card> Hand { get; } = [];
 
-    [ObservableProperty] 
-    private int _chips = 1000;
-    
-    [ObservableProperty] 
-    private int _currentBet;
-    
-    [ObservableProperty] 
-    private bool _isTurn;
-    
-    [ObservableProperty] 
-    private bool _isFolded;
-    
-    [ObservableProperty] 
-    private bool _isEliminated;
+    [ObservableProperty]
+    public partial int Chips { get; set; } = 1000;
+
+    [ObservableProperty]
+    public partial int CurrentBet { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsTurn { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsFolded { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsEliminated { get; set; }
 }

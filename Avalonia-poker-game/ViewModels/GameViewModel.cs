@@ -23,38 +23,38 @@ public partial class GameViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PotText))]
-    private int _pot;
+    public partial int Pot { get; set; }
 
-    [ObservableProperty] 
-    private string _currentPhase = "Pre-Flop";
-    
-    [ObservableProperty] 
-    private string _statusMessage = "Welcome to Poker!";
-    
-    [ObservableProperty] 
-    private bool _showNewHandButton;
-    
-    [ObservableProperty] 
-    private int _raiseAmount = 40;
-    
-    [ObservableProperty] 
-    private int _maxRaise = 1000;
-    
-    [ObservableProperty] 
-    private int _minRaise = 20;
+    [ObservableProperty]
+    public partial string CurrentPhase { get; set; } = "Pre-Flop";
+
+    [ObservableProperty]
+    public partial string StatusMessage { get; set; } = "Welcome to Poker!";
+
+    [ObservableProperty]
+    public partial bool ShowNewHandButton { get; set; }
+
+    [ObservableProperty]
+    public partial int RaiseAmount { get; set; } = 40;
+
+    [ObservableProperty]
+    public partial int MaxRaise { get; set; } = 1000;
+
+    [ObservableProperty]
+    public partial int MinRaise { get; set; } = 20;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(FoldCommand))]
     [NotifyCanExecuteChangedFor(nameof(CheckCallCommand))]
     [NotifyCanExecuteChangedFor(nameof(RaiseCommand))]
-    private bool _isPlayerTurn;
+    public partial bool IsPlayerTurn { get; set; }
 
     public Player Human => Players[0];
     public Player Ai1   => Players[1];
     public Player Ai2   => Players[2];
     public Player Ai3   => Players[3];
     
-    public string CardBackPath => AppSettings.CardBackPath;
+    public string CardBackPath => AppSettings.Instance.CardBackPath;
 
     public string PotText  => $"Pot: ${Pot}";
     public string CallText => _tableBet > Human.CurrentBet

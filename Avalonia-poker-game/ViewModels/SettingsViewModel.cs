@@ -38,34 +38,34 @@ public partial class SettingsViewModel : ViewModelBase
     ];
 
     [ObservableProperty]
-    private CardBackOption _selectedCardBack =
-        CardBackOptions.FirstOrDefault(o => o.Name == AppSettings.CardBackColor)
+    public partial CardBackOption SelectedCardBack { get; set; } =
+        CardBackOptions.FirstOrDefault(o => o.Name == AppSettings.Instance.CardBackColor)
         ?? CardBackOptions[0];
 
     // Auto-save card back as soon as the user clicks a new one
     partial void OnSelectedCardBackChanged(CardBackOption value)
     {
         if (value is not null)
-            AppSettings.CardBackColor = value.Name;
+            AppSettings.Instance.CardBackColor = value.Name;
     }
-    
-    [ObservableProperty] 
-    private bool _soundEffects  = true;
-    
-    [ObservableProperty] 
-    private bool _backgroundMusic = true;
-    
-    [ObservableProperty] 
-    private bool _showAnimations = true;
-    
-    [ObservableProperty] 
-    private bool _autoFold = false;
-    
-    [ObservableProperty] 
-    private bool _showHandHints = false;
-    
-    [ObservableProperty] 
-    private bool _allowChatDuringPlay = true;
+
+    [ObservableProperty]
+    public partial bool SoundEffects { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool BackgroundMusic { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool ShowAnimations { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool AutoFold { get; set; } = false;
+
+    [ObservableProperty]
+    public partial bool ShowHandHints { get; set; } = false;
+
+    [ObservableProperty]
+    public partial bool AllowChatDuringPlay { get; set; } = true;
     
     // Go back 
     [RelayCommand]

@@ -1,12 +1,20 @@
 namespace Avalonia_poker_game.Models;
 
-/// <summary>
-/// Settings that will be shared in the app
-/// </summary>
-public static class AppSettings
-{
-    public static string CardBackColor { get; set; } = "blue";
 
-    public static string CardBackPath =>
+public interface IAppSettings
+{
+    string CardBackColor { get; set; }
+    string CardBackPath { get; }
+}
+
+public sealed class AppSettings : IAppSettings
+{
+    public static AppSettings Instance { get; } = new AppSettings();
+
+    private AppSettings() { }
+
+    public string CardBackColor { get; set; } = "blue";
+
+    public string CardBackPath =>
         $"avares://Avalonia-poker-game/Assets/Cards/back-{CardBackColor}.png";
 }
