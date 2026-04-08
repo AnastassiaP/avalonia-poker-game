@@ -31,4 +31,7 @@ public partial class Player : ObservableObject
 
     [ObservableProperty]
     public partial bool IsEliminated { get; set; }
+
+    [ObservableProperty]
+    public partial bool ShowCards { get; set; }
 }

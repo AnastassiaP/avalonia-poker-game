@@ -148,6 +148,7 @@ public partial class GameViewModel : ViewModelBase
             p.CurrentBet  = 0;
             p.IsFolded    = false;
             p.IsTurn      = false;
+            p.ShowCards   = false;
             if (p.Chips == 0) p.IsEliminated = true;
         }
 
@@ -291,6 +292,10 @@ public partial class GameViewModel : ViewModelBase
 
     private void DoShowdown()
     {
+        // Reveal all active AI hands
+        foreach (var p in ActivePlayers())
+            if (!p.IsHuman) p.ShowCards = true;
+
         // TODO: replace with real hand-evaluation logic
         var active = ActivePlayers();
         var winner = active[_rng.Next(active.Count)];

@@ -81,19 +81,38 @@
                         <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}"
                                    Foreground="#90EE90" FontSize="12"
                                    HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" Spacing="4"
-                                    HorizontalAlignment="Center"
+                        <StackPanel HorizontalAlignment="Center"
                                     IsVisible="{Binding !Ai1.IsEliminated}">
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="4"
+                                        IsVisible="{Binding !Ai1.ShowCards}">
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Ai1.Hand}"
+                                          IsVisible="{Binding Ai1.ShowCards}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Card">
+                                        <Border Width="36" Height="52" CornerRadius="4"
+                                                Background="White" ClipToBounds="True">
+                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
+                                                   Stretch="Fill"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                         <TextBlock Text="Folded" Foreground="#FF6666"
                                    HorizontalAlignment="Center" FontSize="12"
@@ -118,19 +137,38 @@
                         <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}"
                                    Foreground="#90EE90" FontSize="12"
                                    HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" Spacing="4"
-                                    HorizontalAlignment="Center"
+                        <StackPanel HorizontalAlignment="Center"
                                     IsVisible="{Binding !Ai2.IsEliminated}">
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="4"
+                                        IsVisible="{Binding !Ai2.ShowCards}">
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Ai2.Hand}"
+                                          IsVisible="{Binding Ai2.ShowCards}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Card">
+                                        <Border Width="36" Height="52" CornerRadius="4"
+                                                Background="White" ClipToBounds="True">
+                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
+                                                   Stretch="Fill"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                         <TextBlock Text="Folded" Foreground="#FF6666"
                                    HorizontalAlignment="Center" FontSize="12"
@@ -155,19 +193,38 @@
                         <TextBlock Text="{Binding Ai3.Chips, StringFormat='${0}'}"
                                    Foreground="#90EE90" FontSize="12"
                                    HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" Spacing="4"
-                                    HorizontalAlignment="Center"
+                        <StackPanel HorizontalAlignment="Center"
                                     IsVisible="{Binding !Ai3.IsEliminated}">
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
-                            <Border Width="36" Height="52" CornerRadius="4"
-                                    Background="#1a3f8f" ClipToBounds="True">
-                                <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="4"
+                                        IsVisible="{Binding !Ai3.ShowCards}">
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                                <Border Width="36" Height="52" CornerRadius="4"
+                                        Background="#1a3f8f" ClipToBounds="True">
+                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
+                                           Stretch="Fill"/>
+                                </Border>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding Ai3.Hand}"
+                                          IsVisible="{Binding Ai3.ShowCards}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Card">
+                                        <Border Width="36" Height="52" CornerRadius="4"
+                                                Background="White" ClipToBounds="True">
+                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
+                                                   Stretch="Fill"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                         <TextBlock Text="Folded" Foreground="#FF6666"
                                    HorizontalAlignment="Center" FontSize="12"
