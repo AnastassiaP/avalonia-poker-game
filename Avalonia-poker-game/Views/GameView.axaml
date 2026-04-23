@@ -33,7 +33,7 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="Auto,*,Auto" Background="#1a3d1a">
+    <Grid RowDefinitions="Auto,*,Auto" Background="Black">
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto"
               Background="#0d2a0d" Height="44">
 
@@ -56,236 +56,211 @@
         </Grid>
         
         <Grid Grid.Row="1">
-            <Ellipse Width="920" Height="460"
-                     Fill="#2d7a27"
-                     Stroke="#5c3200" StrokeThickness="14"
-                     VerticalAlignment="Center"/>
-            
-            <Grid ColumnDefinitions="*,*,*"
-                  VerticalAlignment="Top" Margin="60,18,60,0">
+            <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                <Grid Width="1200" Height="668">
 
-                <!-- Viktor -->
-                <Border Grid.Column="0" Classes="playerBox"
-                        Classes.active="{Binding Ai1.IsTurn}"
-                        HorizontalAlignment="Center">
-                    <StackPanel Spacing="4" HorizontalAlignment="Center">
-                        <Border Width="72" Height="72" CornerRadius="36"
-                                Background="#334455" ClipToBounds="True"
-                                HorizontalAlignment="Center">
-                            <Image Source="{Binding Ai1.CharacterImagePath, Converter={StaticResource BitmapConv}}"
-                                   Stretch="UniformToFill"/>
-                        </Border>
-                        <TextBlock Text="{Binding Ai1.Name}"
-                                   Foreground="White" FontWeight="Bold"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}"
-                                   Foreground="#90EE90" FontSize="12"
-                                   HorizontalAlignment="Center"/>
-                        <StackPanel HorizontalAlignment="Center"
-                                    IsVisible="{Binding !Ai1.IsEliminated}">
-                            <StackPanel Orientation="Horizontal" Spacing="4"
-                                        IsVisible="{Binding !Ai1.ShowCards}">
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
+                    <Image Source="avares://Avalonia-poker-game/Assets/Background/the_room.jpg"
+                           Stretch="Fill"/>
+
+                    <!-- AI characters pinned to chairs via absolute Canvas coords -->
+                    <Canvas Width="1200" Height="668">
+
+                        <!-- Tigeress - Left chair -->
+                        <Border Canvas.Left="50" Canvas.Top="210"
+                                Classes="playerBox"
+                                Classes.active="{Binding Ai1.IsTurn}">
+                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <Image Source="{Binding Ai1.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="260" Height="260" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai1.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai1.IsEliminated}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai1.ShowCards}">
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Ai1.Hand}" IsVisible="{Binding Ai1.ShowCards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Card">
+                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
+                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai1.IsFolded}"/>
                             </StackPanel>
-                            <ItemsControl ItemsSource="{Binding Ai1.Hand}"
-                                          IsVisible="{Binding Ai1.ShowCards}">
+                        </Border>
+
+                        <!-- Mr. Pig - Center-left back chair -->
+                        <Border Canvas.Left="320" Canvas.Top="80"
+                                Classes="playerBox"
+                                Classes.active="{Binding Ai2.IsTurn}">
+                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <Image Source="{Binding Ai2.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="240" Height="240" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai2.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai2.IsEliminated}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai2.ShowCards}">
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Ai2.Hand}" IsVisible="{Binding Ai2.ShowCards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Card">
+                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
+                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai2.IsFolded}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Capitan - Center-right back chair -->
+                        <Border Canvas.Left="700" Canvas.Top="80"
+                                Classes="playerBox"
+                                Classes.active="{Binding Ai4.IsTurn}">
+                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <Image Source="{Binding Ai4.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="240" Height="240" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai4.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai4.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai4.IsEliminated}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai4.ShowCards}">
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Ai4.Hand}" IsVisible="{Binding Ai4.ShowCards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Card">
+                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
+                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai4.IsFolded}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Rat - Right chair -->
+                        <Border Canvas.Left="970" Canvas.Top="224"
+                                Classes="playerBox"
+                                Classes.active="{Binding Ai3.IsTurn}">
+                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <Image Source="{Binding Ai3.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="260" Height="260" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai3.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai3.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai3.IsEliminated}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai3.ShowCards}">
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Ai3.Hand}" IsVisible="{Binding Ai3.ShowCards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Card">
+                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
+                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai3.IsFolded}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Pot + community cards - center of table -->
+                        <StackPanel Canvas.Left="350" Canvas.Top="310" Width="500" Spacing="8" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding PotText}"
+                                       Foreground="#FFD700" FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+                            <ItemsControl ItemsSource="{Binding CommunityCards}" HorizontalAlignment="Center">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="8"/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:Card">
-                                        <Border Width="36" Height="52" CornerRadius="4"
-                                                Background="White" ClipToBounds="True">
-                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
-                                                   Stretch="Fill"/>
+                                        <Border Width="70" Height="105" CornerRadius="6"
+                                                Background="White" BorderBrush="#cccccc" BorderThickness="1">
+                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                        <TextBlock Text="Folded" Foreground="#FF6666"
-                                   HorizontalAlignment="Center" FontSize="12"
-                                   IsVisible="{Binding Ai1.IsFolded}"/>
-                    </StackPanel>
-                </Border>
 
-                <!-- Sofia -->
-                <Border Grid.Column="1" Classes="playerBox"
-                        Classes.active="{Binding Ai2.IsTurn}"
-                        HorizontalAlignment="Center">
-                    <StackPanel Spacing="4" HorizontalAlignment="Center">
-                        <Border Width="72" Height="72" CornerRadius="36"
-                                Background="#554433" ClipToBounds="True"
-                                HorizontalAlignment="Center">
-                            <Image Source="{Binding Ai2.CharacterImagePath, Converter={StaticResource BitmapConv}}"
-                                   Stretch="UniformToFill"/>
-                        </Border>
-                        <TextBlock Text="{Binding Ai2.Name}"
-                                   Foreground="White" FontWeight="Bold"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}"
-                                   Foreground="#90EE90" FontSize="12"
-                                   HorizontalAlignment="Center"/>
-                        <StackPanel HorizontalAlignment="Center"
-                                    IsVisible="{Binding !Ai2.IsEliminated}">
-                            <StackPanel Orientation="Horizontal" Spacing="4"
-                                        IsVisible="{Binding !Ai2.ShowCards}">
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
-                            </StackPanel>
-                            <ItemsControl ItemsSource="{Binding Ai2.Hand}"
-                                          IsVisible="{Binding Ai2.ShowCards}">
+                        <!-- Player hand - bottom front chair -->
+                        <StackPanel Canvas.Left="350" Canvas.Top="510" Width="500" Spacing="6" HorizontalAlignment="Center">
+                            <ItemsControl ItemsSource="{Binding Human.Hand}" HorizontalAlignment="Center">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="10"/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:Card">
-                                        <Border Width="36" Height="52" CornerRadius="4"
-                                                Background="White" ClipToBounds="True">
-                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
-                                                   Stretch="Fill"/>
+                                        <Border Width="90" Height="135" CornerRadius="8"
+                                                Background="White" BorderBrush="#aaaaaa" BorderThickness="1">
+                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </StackPanel>
-                        <TextBlock Text="Folded" Foreground="#FF6666"
-                                   HorizontalAlignment="Center" FontSize="12"
-                                   IsVisible="{Binding Ai2.IsFolded}"/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Marco -->
-                <Border Grid.Column="2" Classes="playerBox"
-                        Classes.active="{Binding Ai3.IsTurn}"
-                        HorizontalAlignment="Center">
-                    <StackPanel Spacing="4" HorizontalAlignment="Center">
-                        <Border Width="72" Height="72" CornerRadius="36"
-                                Background="#334433" ClipToBounds="True"
-                                HorizontalAlignment="Center">
-                            <Image Source="{Binding Ai3.CharacterImagePath, Converter={StaticResource BitmapConv}}"
-                                   Stretch="UniformToFill"/>
-                        </Border>
-                        <TextBlock Text="{Binding Ai3.Name}"
-                                   Foreground="White" FontWeight="Bold"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="{Binding Ai3.Chips, StringFormat='${0}'}"
-                                   Foreground="#90EE90" FontSize="12"
-                                   HorizontalAlignment="Center"/>
-                        <StackPanel HorizontalAlignment="Center"
-                                    IsVisible="{Binding !Ai3.IsEliminated}">
-                            <StackPanel Orientation="Horizontal" Spacing="4"
-                                        IsVisible="{Binding !Ai3.ShowCards}">
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
-                                <Border Width="36" Height="52" CornerRadius="4"
-                                        Background="#1a3f8f" ClipToBounds="True">
-                                    <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}"
-                                           Stretch="Fill"/>
-                                </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Human.Name}" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Human.Chips, StringFormat='Chips: ${0}'}" Foreground="#90EE90" FontSize="14"/>
                             </StackPanel>
-                            <ItemsControl ItemsSource="{Binding Ai3.Hand}"
-                                          IsVisible="{Binding Ai3.ShowCards}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Spacing="4"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Card">
-                                        <Border Width="36" Height="52" CornerRadius="4"
-                                                Background="White" ClipToBounds="True">
-                                            <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
-                                                   Stretch="Fill"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
                         </StackPanel>
-                        <TextBlock Text="Folded" Foreground="#FF6666"
-                                   HorizontalAlignment="Center" FontSize="12"
-                                   IsVisible="{Binding Ai3.IsFolded}"/>
-                    </StackPanel>
-                </Border>
 
-            </Grid>
-
-            <!-- Cards -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Spacing="10">
-                <TextBlock Text="{Binding PotText}"
-                           Foreground="#FFD700" FontSize="22" FontWeight="Bold"
-                           HorizontalAlignment="Center"/>
-                <ItemsControl ItemsSource="{Binding CommunityCards}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="8"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:Card">
-                            <Border Width="70" Height="105" CornerRadius="6"
-                                    Background="White" BorderBrush="#cccccc" BorderThickness="1">
-                                <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-
-            <!-- ME -->
-            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                        Margin="0,0,0,10" Spacing="6">
-                <ItemsControl ItemsSource="{Binding Human.Hand}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="10"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:Card">
-                            <Border Width="90" Height="135" CornerRadius="8"
-                                    Background="White" BorderBrush="#aaaaaa" BorderThickness="1">
-                                <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}"
-                                       Stretch="Fill"/>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <StackPanel Orientation="Horizontal" Spacing="16"
-                            HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Human.Name}"
-                               Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding Human.Chips, StringFormat='Chips: ${0}'}"
-                               Foreground="#90EE90" FontSize="14"/>
-                </StackPanel>
-            </StackPanel>
-
+                    </Canvas>
+                </Grid>
+            </Viewbox>
         </Grid>
 
         <!-- Action bar -->

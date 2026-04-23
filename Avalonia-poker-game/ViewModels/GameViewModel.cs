@@ -53,6 +53,7 @@ public partial class GameViewModel : ViewModelBase
     public Player Ai1   => Players[1];
     public Player Ai2   => Players[2];
     public Player Ai3   => Players[3];
+    public Player Ai4   => Players[4];
     
     public string CardBackPath => AppSettings.Instance.CardBackPath;
 
@@ -67,10 +68,11 @@ public partial class GameViewModel : ViewModelBase
     public GameViewModel(Action? onBack = null)
     {
         _onBack = onBack;
-        Players.Add(new Player("You",    isHuman: true,  "avares://Avalonia-poker-game/Assets/Characters/you.png"));
-        Players.Add(new Player("Viktor", isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/viktor.png"));
-        Players.Add(new Player("Sofia",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/sofia.png"));
-        Players.Add(new Player("Marco",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/marco.png"));
+        Players.Add(new Player("You",      isHuman: true,  ""));
+        Players.Add(new Player("Tigeress",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/tigeress.png"));
+        Players.Add(new Player("Mr. Pig",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/mr_pig.png"));
+        Players.Add(new Player("Ratto",    isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/the_rat.png"));
+        Players.Add(new Player("Capitan",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/capitan_shark.png"));
 
         _ = StartNewHandAsync();
     }
