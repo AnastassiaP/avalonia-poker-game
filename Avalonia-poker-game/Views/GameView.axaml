@@ -11,6 +11,7 @@
 
     <UserControl.Resources>
         <conv:BitmapAssetValueConverter x:Key="BitmapConv"/>
+        <conv:GreaterThanZeroConverter x:Key="GreaterThanZero"/>
     </UserControl.Resources>
 
     <UserControl.Styles>
@@ -30,6 +31,17 @@
             <Setter Property="FontSize"     Value="15"/>
             <Setter Property="FontWeight"   Value="SemiBold"/>
             <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="Border.betChip">
+            <Setter Property="Background"          Value="#c9a227"/>
+            <Setter Property="CornerRadius"        Value="14"/>
+            <Setter Property="Padding"             Value="10,3"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Border.betChip TextBlock">
+            <Setter Property="Foreground" Value="#1a1a1a"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize"   Value="12"/>
         </Style>
     </UserControl.Styles>
 
@@ -70,10 +82,10 @@
                                 Classes="playerBox"
                                 Classes.active="{Binding Ai1.IsTurn}">
                             <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
                                 <Image Source="{Binding Ai1.CharacterImagePath, Converter={StaticResource BitmapConv}}"
                                        Width="260" Height="260" Stretch="Uniform" HorizontalAlignment="Center"/>
                                 <TextBlock Text="{Binding Ai1.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ai1.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
                                 <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai1.IsEliminated}">
                                     <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai1.ShowCards}">
                                         <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
@@ -98,6 +110,9 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
+                                <Border Classes="betChip" IsVisible="{Binding Ai1.CurrentBet, Converter={StaticResource GreaterThanZero}}">
+                                    <TextBlock Text="{Binding Ai1.CurrentBet, StringFormat='${0}'}"/>
+                                </Border>
                                 <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai1.IsFolded}"/>
                             </StackPanel>
                         </Border>
@@ -107,10 +122,10 @@
                                 Classes="playerBox"
                                 Classes.active="{Binding Ai2.IsTurn}">
                             <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
                                 <Image Source="{Binding Ai2.CharacterImagePath, Converter={StaticResource BitmapConv}}"
                                        Width="240" Height="240" Stretch="Uniform" HorizontalAlignment="Center"/>
                                 <TextBlock Text="{Binding Ai2.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ai2.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
                                 <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai2.IsEliminated}">
                                     <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai2.ShowCards}">
                                         <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
@@ -135,56 +150,22 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
+                                <Border Classes="betChip" IsVisible="{Binding Ai2.CurrentBet, Converter={StaticResource GreaterThanZero}}">
+                                    <TextBlock Text="{Binding Ai2.CurrentBet, StringFormat='${0}'}"/>
+                                </Border>
                                 <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai2.IsFolded}"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- Capitan - Center-right back chair -->
+                        <!-- AI 3 - Center-right back chair (middle) -->
                         <Border Canvas.Left="700" Canvas.Top="80"
-                                Classes="playerBox"
-                                Classes.active="{Binding Ai4.IsTurn}">
-                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
-                                <Image Source="{Binding Ai4.CharacterImagePath, Converter={StaticResource BitmapConv}}"
-                                       Width="240" Height="240" Stretch="Uniform" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ai4.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ai4.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
-                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai4.IsEliminated}">
-                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai4.ShowCards}">
-                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
-                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
-                                        </Border>
-                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
-                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
-                                        </Border>
-                                    </StackPanel>
-                                    <ItemsControl ItemsSource="{Binding Ai4.Hand}" IsVisible="{Binding Ai4.ShowCards}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models:Card">
-                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
-                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai4.IsFolded}"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Rat - Right chair -->
-                        <Border Canvas.Left="970" Canvas.Top="224"
                                 Classes="playerBox"
                                 Classes.active="{Binding Ai3.IsTurn}">
                             <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
-                                <Image Source="{Binding Ai3.CharacterImagePath, Converter={StaticResource BitmapConv}}"
-                                       Width="260" Height="260" Stretch="Uniform" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding Ai3.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="{Binding Ai3.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <Image Source="{Binding Ai3.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="240" Height="240" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai3.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai3.IsEliminated}">
                                     <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai3.ShowCards}">
                                         <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
@@ -209,7 +190,50 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
+                                <Border Classes="betChip" IsVisible="{Binding Ai3.CurrentBet, Converter={StaticResource GreaterThanZero}}">
+                                    <TextBlock Text="{Binding Ai3.CurrentBet, StringFormat='${0}'}"/>
+                                </Border>
                                 <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai3.IsFolded}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- AI 4 - Right chair -->
+                        <Border Canvas.Left="970" Canvas.Top="224"
+                                Classes="playerBox"
+                                Classes.active="{Binding Ai4.IsTurn}">
+                            <StackPanel Spacing="4" HorizontalAlignment="Center" Width="160">
+                                <TextBlock Text="{Binding Ai4.Chips, StringFormat='${0}'}" Foreground="#90EE90" FontSize="12" HorizontalAlignment="Center"/>
+                                <Image Source="{Binding Ai4.CharacterImagePath, Converter={StaticResource BitmapConv}}"
+                                       Width="260" Height="260" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Ai4.Name}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" IsVisible="{Binding !Ai4.IsEliminated}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding !Ai4.ShowCards}">
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                        <Border Width="36" Height="52" CornerRadius="4" Background="#1a3f8f" ClipToBounds="True">
+                                            <Image Source="{Binding CardBackPath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Ai4.Hand}" IsVisible="{Binding Ai4.ShowCards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Card">
+                                                <Border Width="36" Height="52" CornerRadius="4" Background="White" ClipToBounds="True">
+                                                    <Image Source="{Binding ImagePath, Converter={StaticResource BitmapConv}}" Stretch="Fill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <Border Classes="betChip" IsVisible="{Binding Ai4.CurrentBet, Converter={StaticResource GreaterThanZero}}">
+                                    <TextBlock Text="{Binding Ai4.CurrentBet, StringFormat='${0}'}"/>
+                                </Border>
+                                <TextBlock Text="Folded" Foreground="#FF6666" HorizontalAlignment="Center" FontSize="12" IsVisible="{Binding Ai4.IsFolded}"/>
                             </StackPanel>
                         </Border>
 
@@ -237,6 +261,7 @@
 
                         <!-- Player hand - bottom front chair -->
                         <StackPanel Canvas.Left="350" Canvas.Top="510" Width="500" Spacing="6" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding Human.Chips, StringFormat='Chips: ${0}'}" Foreground="#90EE90" FontSize="14" HorizontalAlignment="Center"/>
                             <ItemsControl ItemsSource="{Binding Human.Hand}" HorizontalAlignment="Center">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -254,7 +279,9 @@
                             </ItemsControl>
                             <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
                                 <TextBlock Text="{Binding Human.Name}" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Human.Chips, StringFormat='Chips: ${0}'}" Foreground="#90EE90" FontSize="14"/>
+                                <Border Classes="betChip" IsVisible="{Binding Human.CurrentBet, Converter={StaticResource GreaterThanZero}}">
+                                    <TextBlock Text="{Binding Human.CurrentBet, StringFormat='${0}'}"/>
+                                </Border>
                             </StackPanel>
                         </StackPanel>
 

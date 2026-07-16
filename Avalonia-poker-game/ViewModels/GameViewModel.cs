@@ -12,6 +12,9 @@ public partial class GameViewModel : ViewModelBase
 
     private readonly Deck _deck = new();
     private readonly Random _rng = new();
+    
+    // Play order
+    private static readonly int[] SeatOrder = [0, 1, 2, 3, 4];
 
     private int _dealerIndex = -1;
     private int _currentPlayerIndex;
@@ -71,8 +74,8 @@ public partial class GameViewModel : ViewModelBase
         Players.Add(new Player("You",      isHuman: true,  ""));
         Players.Add(new Player("Tigeress",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/tigeress.png"));
         Players.Add(new Player("Mr. Pig",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/mr_pig.png"));
-        Players.Add(new Player("Ratto",    isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/the_rat.png"));
         Players.Add(new Player("Capitan",  isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/capitan_shark.png"));
+        Players.Add(new Player("Ratto",    isHuman: false, "avares://Avalonia-poker-game/Assets/Characters/the_rat.png"));
 
         _ = StartNewHandAsync();
     }
@@ -183,7 +186,7 @@ public partial class GameViewModel : ViewModelBase
         int guard = 0;
         while ((Players[_currentPlayerIndex].IsFolded || Players[_currentPlayerIndex].IsEliminated)
                && guard++ < Players.Count)
-            _currentPlayerIndex = (_currentPlayerIndex + 1) % Players.Count;
+            _currentPlayerIndex = NextSeatIndex(_currentPlayerIndex);
 
         var current = Players[_currentPlayerIndex];
         current.IsTurn = true;
@@ -249,7 +252,7 @@ public partial class GameViewModel : ViewModelBase
             return;
         }
 
-        _currentPlayerIndex = (_currentPlayerIndex + 1) % Players.Count;
+        _currentPlayerIndex = NextSeatIndex(_currentPlayerIndex);
         await ActivateCurrentPlayer();
     }
 
@@ -298,10 +301,45 @@ public partial class GameViewModel : ViewModelBase
         foreach (var p in ActivePlayers())
             if (!p.IsHuman) p.ShowCards = true;
 
-        // TODO: replace with real hand-evaluation logic
         var active = ActivePlayers();
-        var winner = active[_rng.Next(active.Count)];
-        AwardPot(winner);
+        var results = active.ToDictionary(
+            p => p,
+            p => HandEvaluator.EvaluateBest([.. p.Hand, .. CommunityCards]));
+
+        var best = results.Values.Max()!;
+        var winners = results.Where(kv => kv.Value.CompareTo(best) == 0)
+                              .Select(kv => kv.Key)
+                              .ToList();
+
+        // Kickers only matter to explain the win when someone else at the end
+        // had the same combination and the win/tie came down to the kicker cards.
+        var showKickers = results.Values.Count(r => r.Combination == best.Combination) > 1;
+
+        AwardShowdownPot(winners, best, showKickers);
+    }
+
+    private void AwardShowdownPot(List<Player> winners, HandResult winningHand, bool showKickers)
+    {
+        // Only attribute the win to a specific player's hole cards when there's a single
+        // winner — with a split pot, the tied winners' hole cards can differ, so there's
+        // no one hand to point to.
+        var holeRanks = winners.Count == 1
+            ? new HashSet<Rank>(winners[0].Hand.Select(c => c.Rank))
+            : null;
+        var description = HandEvaluator.Describe(winningHand, showKickers, holeRanks);
+        var share     = Pot / winners.Count;
+        var remainder = Pot % winners.Count;
+
+        foreach (var w in winners) w.Chips += share;
+        if (remainder > 0) winners[0].Chips += remainder;
+
+        StatusMessage = winners.Count == 1
+            ? $"{(winners[0].IsHuman ? "You" : winners[0].Name)} win{(winners[0].IsHuman ? "" : "s")} ${Pot} — {description}!"
+            : $"{string.Join(", ", winners.Select(w => w.IsHuman ? "You" : w.Name))} split ${Pot} — {description}!";
+
+        Pot                = 0;
+        IsPlayerTurn       = false;
+        ShowNewHandButton  = true;
     }
 
     private void AwardPot(Player winner)
@@ -318,11 +356,17 @@ public partial class GameViewModel : ViewModelBase
 
     private int NextActiveIndex(int from)
     {
-        int idx = (from + 1) % Players.Count;
+        int idx = NextSeatIndex(from);
         int guard = 0;
         while (Players[idx].IsEliminated && guard++ < Players.Count)
-            idx = (idx + 1) % Players.Count;
+            idx = NextSeatIndex(idx);
         return idx;
+    }
+
+    private int NextSeatIndex(int from)
+    {
+        var pos = Array.IndexOf(SeatOrder, from);
+        return SeatOrder[(pos + 1) % SeatOrder.Length];
     }
 
     private void PostBlind(Player player, int amount)
