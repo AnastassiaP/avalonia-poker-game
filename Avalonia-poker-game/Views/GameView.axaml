@@ -25,13 +25,6 @@
         <Style Selector="Border.playerBox.active">
             <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
-        <Style Selector="Button.action">
-            <Setter Property="Width"        Value="110"/>
-            <Setter Property="Height"       Value="46"/>
-            <Setter Property="FontSize"     Value="15"/>
-            <Setter Property="FontWeight"   Value="SemiBold"/>
-            <Setter Property="CornerRadius" Value="8"/>
-        </Style>
         <Style Selector="Border.betChip">
             <Setter Property="Background"          Value="#c9a227"/>
             <Setter Property="CornerRadius"        Value="14"/>
@@ -52,8 +45,7 @@
             <Button Grid.Column="0"
                     Content="← Menu"
                     Command="{Binding BackToMenuCommand}"
-                    Background="Transparent" Foreground="#aaaaaa"
-                    FontSize="13" Padding="12,0"
+                    Classes="navButton"
                     VerticalAlignment="Center"/>
 
             <TextBlock Grid.Column="1"
@@ -71,7 +63,7 @@
             <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                 <Grid Width="1200" Height="668">
 
-                    <Image Source="avares://Avalonia-poker-game/Assets/Background/the_room.jpg"
+                    <Image Source="avares://Avalonia-poker-game/Assets/Background/the_poker_table.png"
                            Stretch="Fill"/>
 
                     <!-- AI characters pinned to chairs via absolute Canvas coords -->
@@ -313,23 +305,19 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal"
                         Spacing="10" Margin="16,10"
                         IsVisible="{Binding IsPlayerTurn}">
-                <Button Classes="action" Content="Fold"
-                        Command="{Binding FoldCommand}"
-                        Background="#8B0000" Foreground="White"/>
-                <Button Classes="action" Content="{Binding CallText}"
-                        Command="{Binding CheckCallCommand}"
-                        Background="#1a5c1a" Foreground="White"/>
-                <Button Classes="action" Content="Raise"
-                        Command="{Binding RaiseCommand}"
-                        Background="#8B6914" Foreground="White"/>
+                <Button Classes="action fold" Content="Fold"
+                        Command="{Binding FoldCommand}"/>
+                <Button Classes="action callCheck" Content="{Binding CallText}"
+                        Command="{Binding CheckCallCommand}"/>
+                <Button Classes="action raise" Content="Raise"
+                        Command="{Binding RaiseCommand}"/>
             </StackPanel>
 
             <Button Grid.Column="1"
                     Content="New Hand"
                     Command="{Binding NewHandCommand}"
                     IsVisible="{Binding ShowNewHandButton}"
-                    Width="160" Height="46" FontSize="15"
-                    Background="#2a5a8a" Foreground="White"
+                    Classes="newHand"
                     Margin="16,10"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"/>

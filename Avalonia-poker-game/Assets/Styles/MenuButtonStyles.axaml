@@ -1,0 +1,50 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Primary menu buttons: an unlit glass tube at rest, a lit neon sign on hover -->
+    <Style Selector="Button.menuButton">
+        <Setter Property="Width"           Value="260"/>
+        <Setter Property="Height"          Value="64"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment"   Value="Center"/>
+        <Setter Property="FontFamily"      Value="{StaticResource TiltNeonFont}"/>
+        <Setter Property="FontSize"        Value="30"/>
+        <Setter Property="CornerRadius"    Value="10"/>
+        <Setter Property="Background"      Value="#14000000"/>
+        <Setter Property="Foreground"      Value="#803DE0FF"/>
+        <Setter Property="BorderBrush"     Value="#803DE0FF"/>
+        <Setter Property="BorderThickness" Value="2"/>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Background"      Value="#1A3DE0FF"/>
+            <Setter Property="Foreground"      Value="#E8FEFF"/>
+            <Setter Property="BorderBrush"     Value="#E8FEFF"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Effect">
+                <DropShadowEffect Color="#3DE0FF" BlurRadius="32" OffsetX="0" OffsetY="0" Opacity="1"/>
+            </Setter>
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="#333DE0FF"/>
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.4"/>
+        </Style>
+    </Style>
+
+    <!-- Small top-bar navigation buttons -->
+    <Style Selector="Button.navButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#aaaaaa"/>
+        <Setter Property="FontSize"   Value="13"/>
+        <Setter Property="Padding"    Value="12,0"/>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Foreground" Value="#dddddd"/>
+        </Style>
+    </Style>
+
+</Styles>

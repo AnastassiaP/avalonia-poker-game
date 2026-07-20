@@ -23,8 +23,7 @@
             <Button Grid.Column="0"
                     Content="← Back"
                     Command="{Binding BackCommand}"
-                    Background="Transparent" Foreground="#aaaaaa"
-                    FontSize="13" Padding="12,0"
+                    Classes="navButton"
                     VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1"
                        Text="Settings"

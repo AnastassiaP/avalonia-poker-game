@@ -1,0 +1,65 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Style Selector="Button.action">
+        <Setter Property="Width"        Value="110"/>
+        <Setter Property="Height"       Value="46"/>
+        <Setter Property="FontSize"     Value="15"/>
+        <Setter Property="FontWeight"   Value="SemiBold"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Foreground"   Value="White"/>
+
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+
+        <!-- Colors -->
+        <Style Selector="^.fold">
+            <Setter Property="Background" Value="#8B0000"/>
+        </Style>
+        <Style Selector="^.callCheck">
+            <Setter Property="Background" Value="#1a5c1a"/>
+        </Style>
+        <Style Selector="^.raise">
+            <Setter Property="Background" Value="#8B6914"/>
+        </Style>
+
+        <!-- Hover -->
+        <Style Selector="^.fold:pointerover">
+            <Setter Property="Background" Value="#a80000"/>
+        </Style>
+        <Style Selector="^.callCheck:pointerover">
+            <Setter Property="Background" Value="#227a22"/>
+        </Style>
+        <Style Selector="^.raise:pointerover">
+            <Setter Property="Background" Value="#a87f18"/>
+        </Style>
+
+        <!-- Pressed -->
+        <Style Selector="^.fold:pressed">
+            <Setter Property="Background" Value="#600000"/>
+        </Style>
+        <Style Selector="^.callCheck:pressed">
+            <Setter Property="Background" Value="#0f3d0f"/>
+        </Style>
+        <Style Selector="^.raise:pressed">
+            <Setter Property="Background" Value="#5c460d"/>
+        </Style>
+    </Style>
+    
+    <Style Selector="Button.newHand">
+        <Setter Property="Width"      Value="160"/>
+        <Setter Property="Height"     Value="46"/>
+        <Setter Property="FontSize"   Value="15"/>
+        <Setter Property="Background" Value="#2a5a8a"/>
+        <Setter Property="Foreground" Value="White"/>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="#356fab"/>
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="#1c3d5e"/>
+        </Style>
+    </Style>
+
+</Styles>

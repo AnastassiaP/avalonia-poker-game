@@ -8,8 +8,15 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+
+    <Application.Resources>
+        <FontFamily x:Key="MonotonFont">avares://Avalonia-poker-game/Assets/Fonts#Monoton</FontFamily>
+        <FontFamily x:Key="TiltNeonFont">avares://Avalonia-poker-game/Assets/Fonts#Tilt Neon</FontFamily>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://Avalonia-poker-game/Assets/Styles/MenuButtonStyles.axaml"/>
+        <StyleInclude Source="avares://Avalonia-poker-game/Assets/Styles/GameButtonStyles.axaml"/>
     </Application.Styles>
 </Application>

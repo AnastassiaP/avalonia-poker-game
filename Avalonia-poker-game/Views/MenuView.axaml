@@ -7,23 +7,28 @@
              x:Class="Avalonia_poker_game.Views.MenuView"
              x:DataType="vm:MenuViewModel">
 
-    <Grid RowDefinitions="*, Auto, Auto, *">
+    <Grid RowDefinitions="*, Auto, Auto, *" Background="Black">
         <TextBlock Grid.Row="1"
-                   Text="Poker Game"
+                   Text="POKER GAME"
+                   FontFamily="{StaticResource MonotonFont}"
+                   Foreground="#FF2FD1"
+                   FontSize="56"
                    HorizontalAlignment="Center"
-                   FontSize="48"
-                   FontWeight="Bold"
-                   Margin="0,0,0,48"/>
+                   Margin="0,0,0,48">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="#FF2FD1" BlurRadius="24" OffsetX="0" OffsetY="0" Opacity="0.9"/>
+            </TextBlock.Effect>
+        </TextBlock>
 
         <StackPanel Grid.Row="2"
                     Spacing="16"
                     HorizontalAlignment="Center">
             <Button Content="Play"
                     Command="{Binding PlayCommand}"
-                    Width="200" Height="52" FontSize="18"/>
+                    Classes="menuButton"/>
             <Button Content="Settings"
                     Command="{Binding SettingsCommand}"
-                    Width="200" Height="52" FontSize="18"/>
+                    Classes="menuButton"/>
         </StackPanel>
     </Grid>
 
